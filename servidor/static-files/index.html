@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="./css/reset.css">
+	<link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet">
+	<link rel="stylesheet" href="./css/main.css">
+	<title>crearPersonas</title>
+</head>
+<body>
+
+	<div class="container">
+		<div class="form__top">
+			<h2>Crear <span>Personas</span></h2>
+			<p class="mensj" id="confirmacion">
+		</div>		
+		<form class="form__reg" action="">
+			<input class="input" type="text" id="nombre" placeholder=" Nombre" autofocus>
+            <input class="input" type="text" id="apellido" placeholder=" Apellido" required>
+            <input class="input" type="text" id="dni" placeholder=" DNI" required>
+            <div class="btn__form">
+				<button class="btn__submit" id="enviar" onClick="reqPost()"> ENVIAR </button>
+            	<input class="btn__reset" id="limpiar" type="reset" value="LIMPIAR">	
+			</div>
+		</form>
+	</div>
+	
+</body>
+</html>
+
+<script> 
+
+function reqPost() {
+	
+	event.preventDefault(); ///invesitifar
+
+	var nom = document.getElementById('nombre').value;
+	var ap = document.getElementById('apellido').value;
+	var doc = parseInt(document.getElementById('dni').value);
+
+	var info = { nombre: nom, apellido: ap, dni: doc };
+	var myInit = { method: 'POST',
+					headers: {"content-type": "application/json"} ,
+					 body: JSON.stringify(info) };
+
+	var myRequest = fetch('/', myInit)
+		.then(response => response)
+  		.then(function (data) {
+			console.log(data)
+			if(data.status == 201){
+				document.getElementById("confirmacion").innerHTML = "Persona creada corectamente!";
+			} else {
+				document.getElementById("confirmacion").innerHTML = "Error codigo: "+ data.status;
+			}
+		  });
+}
+
+</script>
